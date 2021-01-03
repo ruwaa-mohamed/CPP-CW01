@@ -1,4 +1,68 @@
 #include <iostream>
+struct Newtons {
+    double x[100]{};
+    double y[100]{};
+    int n;
+    double B[100]{};
+    double y_query[100];
+};
+
+struct Newtons fit(double x[], double y[], int n){
+    struct Newtons newtons_ploynomial;
+    newtons_ploynomial.n = n;
+    
+    // setting the values of x and y
+    for (int i{0}; i<n; i++){
+        newtons_ploynomial.x[i] = x[i];
+        newtons_ploynomial.y[i] = y[i];
+    }
+    
+    // creating 2D Array1 for the B's --> FDD
+    double fdd[n][n]{};
+    
+    // Fill the first column of FDD
+    for (int i{0}; i < n; i++){
+        fdd[i][0] = y[i];
+    }
+    
+    // Fill the rest of the columns of FDD
+    for (int j{1}; j < n; j++){
+        for (int i{0}; i < (n-j); i++){
+            fdd[i][j] = (fdd[i+1][j-1]-fdd[i][j-1])/(x[i+j]-x[i]);
+        }
+    }
+    
+    // Ex1tract the coefeecients 
+    for (int i{0}; i<n; i++){
+        newtons_ploynomial.B[i] = fdd[0][i];
+    }
+    
+    // print out the coeefecients of newtons_ploynomial B`s values
+    for (int count{0}; count < n; count++){
+        std::cout 
+        << "b_" << count << " = " << newtons_ploynomial.B[count] 
+        << std::endl;
+    }
+    std::cout <<std::endl;
+    
+    return newtons_ploynomial;
+}
+
+struct Newtons interpolate(struct Newtons newtons_ploynomial, double x[], int n2){
+    const int n{newtons_ploynomial.n};
+    
+    for (int k{0}; k < n2; k++){
+        newtons_ploynomial.y_query[k] = newtons_ploynomial.B[0];
+        for (int l{1}; l < n; l++){
+            int mult{1};
+            for (int m{0}; m < l; m++){
+                mult *= (x[k]-newtons_ploynomial.x[m]);
+            }
+            newtons_ploynomial.y_query[k] += (newtons_ploynomial.B[l]*mult);
+        }
+    }
+    return newtons_ploynomial;
+}
 
 int main(){
     std::cout << "Part 3- Newton\'s Interpolation\n\n";
@@ -21,61 +85,30 @@ int main(){
     // Define n2
     const int n2{sizeof(x2)/sizeof(x2[0])};
     
-    /// start of the fit function
-    // 2D Array1 of the B`s --> FDD
-    double fdd[n][n]{};
-    
-    // Fill the first column of FDD
-    for (int i{0}; i < n; i++){
-        fdd[i][0] = y1[i];
-    }
-    
-    // Fill the rest of the columns of FDD
-    for (int j{1}; j < n; j++){
-        for (int i{0}; i < n-j; i++){
-            fdd[i][j] = (fdd[i+1][j-1]-fdd[i][j-1])/(x1[i+j]-x1[i]);
-        }
-    }
-    
-    // Ex1tract the coefeecients 
-    double b[n]{};
-    for (int i{0}; i<n; i++){
-        b[i] = fdd[0][i];
-    }
-    
-    // print out the coeefecients' array1
+    // Fitting for dataset 1
+    struct Newtons dataset1;
+    dataset1 = fit(x1, y1, n); // will set the B's and N
+    dataset1 = interpolate(dataset1, x1, n);
+    // print the interpolation results
     for (int count{0}; count < n; count++){
-        std::cout 
-        << "b_" << count << " = " << b[count] 
-        << std::endl;
+        std::cout << "x_" << count << " = " << x1[count] 
+        << ", y_" << count << " = " << y1[count]
+        << ", predicted = " << dataset1.y_query[count] << std::endl;
     }
     std::cout <<std::endl;
-    /// end of the fit function
     
-    
-    /// start of the interpolate function
-    double y_1[n2]{};
-    
-    for (int k{0}; k < n2; k++){
-        y_1[k] = b[0];
-        for (int l{1}; l < n; l++){
-            int mult{1};
-            for (int m{0}; m < l; m++){
-                mult *= (x2[k]-x1[m]);
-            }
-            y_1[k] += (b[l]*mult);
-        }
-    }
-    
-    // print out the querry array1s
+    // Fitting for dataset 2
+    struct Newtons dataset2;
+    dataset2 = fit(x2, y2, n2); // will set the B's and N
+    dataset2 = interpolate(dataset2, x2, n2);
+    // print the interpolation results
     for (int count{0}; count < n; count++){
-        std::cout 
-        << "x_" << count << " = " << x2[count]
-        <<",\ty_" << count << " = " << y_1[count]
-        << std::endl;
+        std::cout << "x_" << count << " = " << x2[count] 
+        << ", y_" << count << " = " << y2[count]
+        << ", predicted = " << dataset2.y_query[count] << std::endl;
     }
-    /// end of the interpolate function
     
+        
     std::cout << std::endl;
     return 0;
 }
