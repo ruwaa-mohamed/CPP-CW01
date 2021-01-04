@@ -93,6 +93,8 @@
     </Configuration>
   </Settings>
   <VirtualDirectory Name="src">
-    <File Name="NewtonsInterpolation.cpp"/>
+    <File Name="main.cpp"/>
+    <File Name="part03.declerations.h"/>
+    <File Name="part03.Newtons.cpp"/>
   </VirtualDirectory>
 </CodeLite_Project>

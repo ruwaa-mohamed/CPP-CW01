@@ -13,7 +13,7 @@ CurrentFileName        :=
 CurrentFilePath        :=
 CurrentFileFullPath    :=
 User                   :=Ruwaa
-Date                   :=03/01/21
+Date                   :=04/01/21
 CodeLitePath           :=/home/ruwaa/.codelite
 LinkerName             :=/usr/bin/g++
 SharedObjectLinkerName :=/usr/bin/g++ -shared -fPIC
@@ -60,7 +60,7 @@ AS       := /usr/bin/as
 ## User defined environment variables
 ##
 CodeLiteDir:=/usr/share/codelite
-Objects0=$(IntermediateDirectory)/NewtonsInterpolation.cpp$(ObjectSuffix) 
+Objects0=$(IntermediateDirectory)/main.cpp$(ObjectSuffix) $(IntermediateDirectory)/part03.Newtons.cpp$(ObjectSuffix) 
 
 
 
@@ -91,13 +91,21 @@ PreBuild:
 ##
 ## Objects
 ##
-$(IntermediateDirectory)/NewtonsInterpolation.cpp$(ObjectSuffix): NewtonsInterpolation.cpp $(IntermediateDirectory)/NewtonsInterpolation.cpp$(DependSuffix)
-	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/ruwaa/Documents/NU/CIT644-ScientificComputing_Elhelw/CodeLite/coursework01/NewtonsInterpolation.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/NewtonsInterpolation.cpp$(ObjectSuffix) $(IncludePath)
-$(IntermediateDirectory)/NewtonsInterpolation.cpp$(DependSuffix): NewtonsInterpolation.cpp
-	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/NewtonsInterpolation.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/NewtonsInterpolation.cpp$(DependSuffix) -MM NewtonsInterpolation.cpp
+$(IntermediateDirectory)/main.cpp$(ObjectSuffix): main.cpp $(IntermediateDirectory)/main.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/ruwaa/Documents/NU/CIT644-ScientificComputing_Elhelw/CodeLite/coursework01/main.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/main.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/main.cpp$(DependSuffix): main.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/main.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/main.cpp$(DependSuffix) -MM main.cpp
 
-$(IntermediateDirectory)/NewtonsInterpolation.cpp$(PreprocessSuffix): NewtonsInterpolation.cpp
-	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/NewtonsInterpolation.cpp$(PreprocessSuffix) NewtonsInterpolation.cpp
+$(IntermediateDirectory)/main.cpp$(PreprocessSuffix): main.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/main.cpp$(PreprocessSuffix) main.cpp
+
+$(IntermediateDirectory)/part03.Newtons.cpp$(ObjectSuffix): part03.Newtons.cpp $(IntermediateDirectory)/part03.Newtons.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/ruwaa/Documents/NU/CIT644-ScientificComputing_Elhelw/CodeLite/coursework01/part03.Newtons.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/part03.Newtons.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/part03.Newtons.cpp$(DependSuffix): part03.Newtons.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/part03.Newtons.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/part03.Newtons.cpp$(DependSuffix) -MM part03.Newtons.cpp
+
+$(IntermediateDirectory)/part03.Newtons.cpp$(PreprocessSuffix): part03.Newtons.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/part03.Newtons.cpp$(PreprocessSuffix) part03.Newtons.cpp
 
 
 -include $(IntermediateDirectory)/*$(DependSuffix)
